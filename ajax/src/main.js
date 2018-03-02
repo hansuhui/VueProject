@@ -3,6 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
+
+Vue.config.productionTip = false
+axios.defaults.baseURL = 'http://222.122.202.220'
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
 
