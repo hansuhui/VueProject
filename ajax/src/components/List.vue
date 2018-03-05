@@ -43,9 +43,10 @@ export default {
   },
   methods : {
     GetList () {
-      var params = new URLSearchParams()
-      params.append('req_name', 'han')
-      this.$axios.post(`/Vue/List/`, params, {responseType: 'json'})
+      var formData = new FormData()
+      formData.append("req_name",'han')
+
+      this.$axios.post(`/Vue/List/`,formData, {responseType: 'json'})
       .then((result) => {
         if (result.data.result === '00') {
           this.ImageList = JSON.parse(result.data.list)

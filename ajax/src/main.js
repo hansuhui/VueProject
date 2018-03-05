@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import ES6Promise from 'es6-promise'
+
+ES6Promise.polyfill()
 
 Vue.config.productionTip = false
 axios.defaults.baseURL = 'http://222.122.202.220'
