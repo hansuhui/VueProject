@@ -58,7 +58,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import MainLayout from '@/components/Shared/_MainLayout'
 import EventBus from '@//EventBus'
 
@@ -67,17 +66,9 @@ export default {
   components: { MainLayout },
   props: ['name'],
   created () {
-    EventBus.$emit('loading', true)
-    axios.post('/api/test/list', {})
-      .then((res) => {
-        if (res.data.code === '00') {
-          this.r_List = res.data.result
-          EventBus.$emit('loading', false)
-        }
-      }).catch(() => {
-        EventBus.$emit('loading', false)
-        alert('에러 발생')
-      })
+    EventBus.ajax('/api/test/list', {}, this, function (component, res) {
+      component.r_List = res.data.result
+    })
   },
   data () {
     return {
