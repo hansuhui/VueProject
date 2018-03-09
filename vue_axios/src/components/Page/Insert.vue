@@ -6,10 +6,10 @@
       <!-- ################################################################################################ -->
       <ul>
         <li><a href="#">Home</a></li>
-        <li><a href="#">List</a></li>
+        <li><a href="#">Insert</a></li>
       </ul>
       <!-- ################################################################################################ -->
-      <h6 class="heading">List</h6>
+      <h6 class="heading">Insert</h6>
       <!-- ################################################################################################ -->
     </section>
   </div>
@@ -22,28 +22,25 @@
     <!-- ################################################################################################ -->
     <div class="content">
       <!-- ################################################################################################ -->
-      <h1>TEST</h1>
-      <div class="scrollable">
-        <table>
-          <thead>
-            <tr>
-              <th>이름</th>
-              <th>이메일</th>
-              <th>주소</th>
-              <th>가입일</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="data in r_List" :key='data.pk'>
-              <td><a href="#" @click='GoDetile(data.pk)'>{{data.name}}</a></td>
-              <td>{{data.email}}</td>
-              <td>{{data.address}}</td>
-              <td>{{new Date(data.regdate).toLocaleString()}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <button style="float:right" class="btn" @click='Insert'>등록</button>
+      <div id="comments">
+        <h2>등록</h2>
+        <form action="#" method="post">
+          <div class="one_third first">
+            <label for="name">Name <span>*</span></label>
+            <input type="text" v-model="r_infor.name"  maxlength="20" size="22" required>
+          </div>
+          <div class="one_third">
+            <label for="email">Mail</label>
+            <input type="text" v-model="r_infor.email"  maxlength="20" size="22">
+          </div>
+          <div class="one_third">
+            <label for="url">Address</label>
+            <input type="text" v-model="r_infor.address"  maxlength="20" size="22">
+          </div>
+        </form>
       </div>
+      <button class="btn" @click='Insert'>등록</button>
+      <button class="btn" style="float:right" @click='GoList'>리스트</button>
       <!-- ################################################################################################ -->
     </div>
     <!-- ################################################################################################ -->
@@ -59,30 +56,35 @@
 </template>
 
 <script>
-import MainLayout from '@/components/Shared/_MainLayout'
 import EventBus from '@//EventBus'
+import MainLayout from '@/components/Shared/_MainLayout'
 
 export default {
-  name: 'List',
+  name: 'Insert',
   components: { MainLayout },
-  props: ['name'],
+  props: ['pk'],
   created () {
-    EventBus.ajax('/api/test/list', {}, this, function (component, res) {
-      component.r_List = res.data.result
-    })
   },
   data () {
     return {
-      r_List: []
+      r_infor: {name: '', email: '', address: ''}
     }
   },
   methods: {
-    GoDetile (pk) {
-      EventBus.$emit('loading', true)
-      this.$router.push({name: 'Detail', params: {pk: pk}})
-    },
     Insert () {
-      this.$router.push({name: 'Insert'})
+      if (
+        confirm('등록 하시겠습니까?')
+      ) {
+        EventBus.$emit('loading', true)
+        EventBus.ajax('/api/test/Insert', this.r_infor, this, function (component, res) {
+          alert('등록되었습니다.')
+          component.$router.push({name: 'List', params: {name: '리스트'}})
+        })
+      }
+    },
+    GoList () {
+      EventBus.$emit('loading', true)
+      this.$router.push({name: 'List', params: {name: '리스트'}})
     }
   }
 }

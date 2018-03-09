@@ -5,6 +5,7 @@ import Transition from '@/components/Page/Transition'
 import List from '@/components/Page/List'
 import Detail from '@/components/Page/Detail'
 import Update from '@/components/Page/Update'
+import Insert from '@/components/Page/Insert'
 
 Vue.use(Router)
 
@@ -39,6 +40,12 @@ export default new Router({
       name: 'Update',
       props: true,
       component: Update
+    },
+    {
+      path: '/Page/Insert',
+      name: 'Insert',
+      props: true,
+      component: Insert
     }
   ]
 })

@@ -40,6 +40,25 @@ module.exports = function(app){
     });
   });
 
+  
+  app.post(Name+'/Insert',function(req , res){
+    if(!req.body['name']){
+      res_util.setError('99','잘못된 접근입니다.')
+      res.status(200).json(res_util.json_val);
+    }
+    
+    var update_sql = 'insert into test (name,email,address,regdate) value ( '
+    update_sql += "'"+req.body['name']+"', "
+    update_sql += "'"+req.body['email']+"', "
+    update_sql += "'"+req.body['address']+"',"
+    update_sql += "now()"
+    update_sql += ")"
+
+    mysql.exec(update_sql,function (err,result) {
+      res.status(200).json(res_util.json_val);
+    });
+  });
+
   app.post(Name+'/update',function(req , res){
     if(!req.body['pk'] || !req.body['name']){
       res_util.setError('99','잘못된 접근입니다.')
