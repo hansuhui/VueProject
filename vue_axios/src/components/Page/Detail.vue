@@ -70,7 +70,7 @@ export default {
   created () {
     EventBus.$emit('loading', true)
     if (this.pk) {
-      EventBus.ajax('/api/test/list', {pk: this.pk}, this, function (component, res) {
+      EventBus.ajax('/api/test/detail', {pk: this.pk}, this, function (component, res) {
         res.data.result[0].regdate = new Date(res.data.result[0].regdate).toLocaleString()
         component.r_infor = res.data.result[0]
       })
@@ -96,16 +96,10 @@ export default {
       if (
         confirm('삭제 하시겠습니까?')
       ) {
-        axios.post('/api/test/delete', {pk: this.pk})
-          .then((res) => {
-            if (res.data.code === '00') {
-              alert('삭제 되었습니다')
-              this.$router.push({name: 'List', params: {name: '리스트'}})
-            }
-          }).catch(() => {
-            alert('에러 발생')
-            EventBus.$emit('loading', false)
-          })
+        EventBus.ajax('/api/test/delete', {pk: this.pk}, this, function (component, res) {
+          alert('삭제 되었습니다')
+          component.$router.push({name: 'List', params: {name: '리스트'}})
+        })
       }
     }
   }

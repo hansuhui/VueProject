@@ -20,8 +20,10 @@ module.exports = function(app){
       res_util.setError('99','잘못된 접근입니다.')
       res.status(200).json(res_util.json_val);
     }
+    
+    console.log(req.body['pk'])
 
-    mysql.exec('select * from test where pk = '+req.body['pk'],function (err,result) {
+    mysql.exec('select * from test where pk = '+req.body['pk']+'',function (err,result) {
       res_util.json_val.result = result;
       res.status(200).json(res_util.json_val);
     });
@@ -33,7 +35,7 @@ module.exports = function(app){
       res.status(200).json(res_util.json_val);
     }
 
-    mysql.exec('delete from test where pk = '+req.body['pk'],function (err,result) {
+    mysql.exec('delete from test where pk = '+req.body['pk']+'',function (err,result) {
       res.status(200).json(res_util.json_val);
     });
   });

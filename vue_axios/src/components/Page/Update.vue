@@ -66,7 +66,7 @@ export default {
   created () {
     EventBus.$emit('loading', true)
     if (this.pk) {
-      EventBus.ajax('/api/test/list', {pk: this.pk}, this, function (component, res) {
+      EventBus.ajax('/api/test/detail', {pk: this.pk}, this, function (component, res) {
         res.data.result[0].regdate = new Date(res.data.result[0].regdate).toLocaleString()
         component.r_infor = res.data.result[0]
       })
