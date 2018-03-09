@@ -3,7 +3,7 @@ import test from '../tests'
 // 상태를 변경하는 기능만을 뽑아서..
 export default{
   [test.LIST]: (state, payload) => {
-    state.imagelist = payload.imagelist
+    state.list = payload.list
   },
   [test.INSERT]: (state) => {
     state.imagelist = []
