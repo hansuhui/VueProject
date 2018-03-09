@@ -56,7 +56,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import EventBus from '@//EventBus'
 import MainLayout from '@/components/Shared/_MainLayout'
 
@@ -67,17 +66,10 @@ export default {
   created () {
     EventBus.$emit('loading', true)
     if (this.pk) {
-      axios.post('/api/test/detail', {pk: this.pk})
-        .then((res) => {
-          if (res.data.code === '00') {
-            res.data.result[0].regdate = new Date(res.data.result[0].regdate).toLocaleString()
-            this.r_infor = res.data.result[0]
-            EventBus.$emit('loading', false)
-          }
-        }).catch(() => {
-          alert('에러 발생')
-          EventBus.$emit('loading', false)
-        })
+      EventBus.ajax('/api/test/list', {pk: this.pk}, this, function (component, res) {
+        res.data.result[0].regdate = new Date(res.data.result[0].regdate).toLocaleString()
+        component.r_infor = res.data.result[0]
+      })
     } else {
       alert('잘못된 접근입니다.')
       EventBus.$emit('loading', false)
@@ -95,17 +87,10 @@ export default {
         confirm('수정 하시겠습니까?')
       ) {
         EventBus.$emit('loading', true)
-        axios.post('/api/test/update', this.r_infor)
-          .then((res) => {
-            if (res.data.code === '00') {
-              alert('수정되었습니다.')
-              this.$router.push({name: 'List', params: {name: '리스트'}})
-              EventBus.$emit('loading', false)
-            }
-          }).catch(() => {
-            alert('에러 발생')
-            EventBus.$emit('loading', false)
-          })
+        EventBus.ajax('/api/test/update', this.r_infor, this, function (component, res) {
+          alert('수정되었습니다.')
+          component.$router.push({name: 'List', params: {name: '리스트'}})
+        })
       }
     },
     GoList () {
