@@ -14,6 +14,7 @@ var db = {
     conn : db_conn,
     exec : function (sql,callback) {
         this.conn.query(sql, function (err, result) {
+            if(err){ console.log("에러 발생 :"+err); }
             callback(err, result)
          });        
     }

@@ -1,8 +1,9 @@
 export default {
   LIST: 'List',
-  INSERT: 'Insert',
-  DETAIL: 'Detail',
+  SELECT: 'Select',
+  RESET: 'Reset',
   DELETE: 'Delete',
   UPDATE: 'Update',
+  INSERT: 'Insert',
   CHANGE_ISLOADING: 'changeIsLoading'
 }

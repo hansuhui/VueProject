@@ -34,7 +34,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="data in r_List" :key='data.pk'>
+            <tr v-for="data in list" :key='data.pk'>
               <td><a href="#" @click='GoDetile(data.pk)'>{{data.name}}</a></td>
               <td>{{data.email}}</td>
               <td>{{data.address}}</td>
@@ -60,25 +60,22 @@
 
 <script>
 import MainLayout from '@/components/Shared/_MainLayout'
-import EventBus from '@//EventBus'
+import { mapState } from 'vuex'
+import _ from 'lodash'
+import tests from '@/tests'
 
 export default {
   name: 'List',
   components: { MainLayout },
   props: ['name'],
-  created () {
-    EventBus.ajax('/api/test/list', {}, this, function (component, res) {
-      component.r_List = res.data.result
-    })
-  },
-  data () {
-    return {
-      r_List: []
-    }
+  computed: _.extend(
+    mapState([ 'list' ])
+  ),
+  mounted: function () {
+    this.$store.dispatch(tests.LIST, {})
   },
   methods: {
     GoDetile (pk) {
-      EventBus.$emit('loading', true)
       this.$router.push({name: 'Detail', params: {pk: pk}})
     },
     Insert () {

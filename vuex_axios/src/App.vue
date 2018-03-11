@@ -8,21 +8,14 @@
 <script>
 
 import Loading from '@/components/Shared/Loading'
-import EventBus from './EventBus'
+import { mapState } from 'vuex'
+import _ from 'lodash'
 
 export default {
   name: 'App',
   components: { Loading },
-  created () {
-    EventBus.$on('loading', this.loading)
-  },
-  data () {
-    return {isloading: false}
-  },
-  methods: {
-    loading (loading) {
-      this.isloading = loading
-    }
-  }
+  computed: _.extend(
+    mapState([ 'isloading' ])
+  )
 }
 </script>
