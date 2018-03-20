@@ -29,7 +29,7 @@
         <figure>
           <header class="heading">Gallery Title Goes Here</header>
           <ul class="nospace clear">
-              <li v-for='(list,index) in imgList' v-bind:key="index" class="one_quarter" :class="{ first:index % 4 == 0}">
+              <li v-for='(list,index) in imgList' v-bind:key="index" class="shadow one_quarter" :class="{ first:index % 4 == 0}">
                 <transition name="slide-fade">
                 <a style="cursor: pointer;" v-show="list.isShow" v-on:click="test(list)"><img src="/static/images/demo/gallery/01.png" alt=""></a>
                 </transition>
@@ -118,4 +118,8 @@ function GetList () {
   transform: translateX(50px);
   opacity: 0;
 }
+.shadow:hover {
+  box-shadow:0 5px 5px #DADADA;
+  transition:box-shadow .2s;
+ }
 </style>
