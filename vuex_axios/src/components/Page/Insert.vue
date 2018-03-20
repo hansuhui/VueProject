@@ -27,15 +27,15 @@
         <form action="#" method="post">
           <div class="one_third first">
             <label for="name">Name <span>*</span></label>
-            <input type="text" v-model="r_infor.name"  maxlength="20" size="22" required>
+            <input type="text" v-model="one.name"  maxlength="20" size="22" required>
           </div>
           <div class="one_third">
             <label for="email">Mail</label>
-            <input type="text" v-model="r_infor.email"  maxlength="20" size="22">
+            <input type="text" v-model="one.email"  maxlength="20" size="22">
           </div>
           <div class="one_third">
             <label for="url">Address</label>
-            <input type="text" v-model="r_infor.address"  maxlength="20" size="22">
+            <input type="text" v-model="one.address"  maxlength="20" size="22">
           </div>
         </form>
       </div>
@@ -56,34 +56,31 @@
 </template>
 
 <script>
-import EventBus from '@//EventBus'
 import MainLayout from '@/components/Shared/_MainLayout'
+import { mapState } from 'vuex'
+import _ from 'lodash'
+import tests from '@/tests'
 
 export default {
   name: 'Insert',
   components: { MainLayout },
-  props: ['pk'],
   created () {
+    this.$store.commit(tests.RESET, {})
   },
-  data () {
-    return {
-      r_infor: {name: '', email: '', address: ''}
-    }
-  },
+  computed: _.extend(
+    mapState([ 'one' ])
+  ),
   methods: {
     Insert () {
       if (
         confirm('등록 하시겠습니까?')
       ) {
-        EventBus.$emit('loading', true)
-        EventBus.ajax('/api/test/Insert', this.r_infor, this, function (component, res) {
-          alert('등록되었습니다.')
-          component.$router.push({name: 'List', params: {name: '리스트'}})
-        })
+        this.$store.dispatch(tests.INSERT)
+        this.$router.push({name: 'List', params: {name: '리스트'}})
       }
     },
     GoList () {
-      EventBus.$emit('loading', true)
+      this.$store.dispatch(tests.LIST, {})
       this.$router.push({name: 'List', params: {name: '리스트'}})
     }
   }

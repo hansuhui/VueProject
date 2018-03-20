@@ -27,15 +27,15 @@
         <form action="#" method="post">
           <div class="one_third first">
             <label for="name">Name <span>*</span></label>
-            <input type="text" v-model="r_infor.name"  maxlength="20" size="22" required>
+            <input type="text" v-model="one.name"  maxlength="20" size="22" required>
           </div>
           <div class="one_third">
             <label for="email">Mail</label>
-            <input type="text" v-model="r_infor.email"  maxlength="20" size="22">
+            <input type="text" v-model="one.email"  maxlength="20" size="22">
           </div>
           <div class="one_third">
             <label for="url">Address</label>
-            <input type="text" v-model="r_infor.address"  maxlength="20" size="22">
+            <input type="text" v-model="one.address"  maxlength="20" size="22">
           </div>
         </form>
       </div>
@@ -56,29 +56,24 @@
 </template>
 
 <script>
-import EventBus from '@//EventBus'
 import MainLayout from '@/components/Shared/_MainLayout'
+import { mapState } from 'vuex'
+import _ from 'lodash'
+import tests from '@/tests'
 
 export default {
   name: 'update',
   components: { MainLayout },
   props: ['pk'],
+  computed: _.extend(
+    mapState([ 'one' ])
+  ),
   created () {
-    EventBus.$emit('loading', true)
     if (this.pk) {
-      EventBus.ajax('/api/test/detail', {pk: this.pk}, this, function (component, res) {
-        res.data.result[0].regdate = new Date(res.data.result[0].regdate).toLocaleString()
-        component.r_infor = res.data.result[0]
-      })
+      this.$store.dispatch(tests.SELECT, {pk: this.pk})
     } else {
       alert('잘못된 접근입니다.')
-      EventBus.$emit('loading', false)
       this.$router.push({name: 'List', params: {name: '리스트'}})
-    }
-  },
-  data () {
-    return {
-      r_infor: {}
     }
   },
   methods: {
@@ -86,15 +81,11 @@ export default {
       if (
         confirm('수정 하시겠습니까?')
       ) {
-        EventBus.$emit('loading', true)
-        EventBus.ajax('/api/test/update', this.r_infor, this, function (component, res) {
-          alert('수정되었습니다.')
-          component.$router.push({name: 'List', params: {name: '리스트'}})
-        })
+        this.$store.dispatch(tests.UPDATE)
+        this.$router.push({name: 'List', params: {name: '리스트'}})
       }
     },
     GoList () {
-      EventBus.$emit('loading', true)
       this.$router.push({name: 'List', params: {name: '리스트'}})
     }
   }

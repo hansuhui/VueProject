@@ -9,12 +9,12 @@ export default {
     return axios.post(CONF.INSERT, params)
   },
   Detail: function (params) {
-    return axios.post(CONF.LIST, params)
+    return axios.post(CONF.DETAIL, params)
   },
   Delete: function (params) {
-    return axios.post(CONF.LIST, params)
+    return axios.post(CONF.DELETE, params)
   },
   Update: function (params) {
-    return axios.post(CONF.LIST, params)
+    return axios.post(CONF.UPDATE, params)
   }
 }

@@ -5,11 +5,11 @@ export default{
   [test.LIST]: (state, payload) => {
     state.list = payload.list
   },
-  [test.INSERT]: (state) => {
-    state.imagelist = []
+  [test.RESET]: (state) => {
+    state.one = {pk: '', name: '', email: '', address: ''}
   },
-  [test.IMAGE_DETAIL]: (state, payload) => {
-    state.imageInfo = payload.imageInfo
+  [test.SELECT]: (state, payload) => {
+    state.one = payload.one
   },
   [test.CHANGE_ISLOADING]: (state, payload) => {
     state.isloading = payload.isloading

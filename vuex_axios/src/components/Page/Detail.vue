@@ -30,13 +30,13 @@
               <header>
                 <figure class="avatar"><img src="/static/images/demo/avatar.png" alt=""></figure>
                 <address>
-                이름 : <a href="#">{{r_infor.name}}</a>
+                이름 : <a href="#">{{one.name}}</a>
                 </address>
-                <time :datetime="r_infor.regdate">{{r_infor.regdate}}</time>
+                <time :datetime="one.regdate">{{one.regdate}}</time>
               </header>
               <div class="comcont">
-                <p>Eail : {{r_infor.email}}</p>
-                <p>address : {{r_infor.address}}</p>
+                <p>Eail : {{one.email}}</p>
+                <p>address : {{one.address}}</p>
               </div>
             </article>
           </li>
@@ -60,34 +60,29 @@
 </template>
 
 <script>
-import EventBus from '@//EventBus'
 import MainLayout from '@/components/Shared/_MainLayout'
+import { mapState } from 'vuex'
+import _ from 'lodash'
+import tests from '@/tests'
 
 export default {
   name: 'Detail',
   components: { MainLayout },
   props: ['pk'],
+  computed: _.extend(
+    mapState([ 'one' ])
+  ),
   created () {
-    EventBus.$emit('loading', true)
     if (this.pk) {
-      EventBus.ajax('/api/test/detail', {pk: this.pk}, this, function (component, res) {
-        res.data.result[0].regdate = new Date(res.data.result[0].regdate).toLocaleString()
-        component.r_infor = res.data.result[0]
-      })
+      this.$store.dispatch(tests.SELECT, {pk: this.pk})
     } else {
       alert('잘못된 접근입니다.')
-      EventBus.$emit('loading', false)
       this.$router.push({name: 'List', params: {name: '리스트'}})
-    }
-  },
-  data () {
-    return {
-      r_infor: {}
     }
   },
   methods: {
     update () {
-      this.$router.push({name: 'Update', params: {pk: this.r_infor.pk}})
+      this.$router.push({name: 'Update', params: {pk: this.one.pk}})
     },
     GoList () {
       this.$router.push({name: 'List', params: {name: '리스트'}})
@@ -96,10 +91,8 @@ export default {
       if (
         confirm('삭제 하시겠습니까?')
       ) {
-        EventBus.ajax('/api/test/delete', {pk: this.pk}, this, function (component, res) {
-          alert('삭제 되었습니다')
-          component.$router.push({name: 'List', params: {name: '리스트'}})
-        })
+        this.$store.dispatch(tests.DELETE, {pk: this.pk})
+        this.$router.push({name: 'List', params: {name: '리스트'}})
       }
     }
   }
