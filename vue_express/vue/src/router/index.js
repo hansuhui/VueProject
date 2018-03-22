@@ -6,6 +6,7 @@ import List from '@/components/Page/List'
 import Detail from '@/components/Page/Detail'
 import Update from '@/components/Page/Update'
 import Insert from '@/components/Page/Insert'
+import Upload from '@/components/Page/Upload'
 
 Vue.use(Router)
 
@@ -46,6 +47,12 @@ export default new Router({
       name: 'Insert',
       props: true,
       component: Insert
+    },
+    {
+      path: '/Page/Upload',
+      name: 'Upload',
+      props: true,
+      component: Upload
     }
   ]
 })

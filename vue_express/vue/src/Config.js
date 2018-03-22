@@ -7,5 +7,6 @@ export default {
   INSERT: BASE_URL + '/Insert',
   DETAIL: BASE_URL + '/detail',
   DELETE: BASE_URL + '/delete',
-  UPDATE: BASE_URL + '/update'
+  UPDATE: BASE_URL + '/update',
+  UPLOAD: BASE_URL + '/upload'
 }

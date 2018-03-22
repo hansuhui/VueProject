@@ -16,5 +16,12 @@ export default {
   },
   Update: function (params) {
     return axios.post(CONF.UPDATE, params)
+  },
+  Upload: function (params) {
+    return axios.post(CONF.UPLOAD, params, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
   }
 }

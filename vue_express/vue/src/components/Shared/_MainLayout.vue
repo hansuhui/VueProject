@@ -39,6 +39,7 @@
             <ul>
               <li :class="{active : activeName =='Transition'}"><router-link :to="{ name: 'Transition', params: { name : 'Transition' } }">Transition</router-link></li>
               <li :class="{active : activeName =='List'}"><router-link :to="{ name: 'List', params: { name : 'List' } }">List</router-link></li>
+              <li :class="{active : activeName =='Upload'}"><router-link :to="{ name: 'Upload', params: { name : 'Upload' } }">Upload</router-link></li>
             </ul>
           </li>
           <li><a class="drop" href="#">Dropdown</a>

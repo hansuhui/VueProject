@@ -60,5 +60,17 @@ export default {
           alert(res.data.message)
         }
       })
+  },
+  [test.UPLOAD]: (store, payload) => {
+    api.Upload({pk: payload})
+      .then((res) => {
+        if (res.data.code === '00') {
+          alert('등록 되었습니다')
+          store.dispatch(test.LIST, {})
+          store.commit(test.CHANGE_ISLOADING, { isloading: false })
+        } else {
+          alert(res.data.message)
+        }
+      })
   }
 }
