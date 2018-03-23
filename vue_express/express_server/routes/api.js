@@ -4,6 +4,18 @@ var router = express.Router();
 var mysql = require('../db/db_con');
 var res_util = require('../util/res_util');
 
+var multer = require('multer'); // express에 multer모듈 적용 (for 파일업로드)
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/uploads') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname) // cb 콜백함수를 통해 전송된 파일 이름 설정
+  }
+})
+var upload = multer({ storage: storage })
+
+
 
 router.post('/list',function(req , res){
   mysql.exec('select * from test',function (err,result) {
@@ -81,6 +93,12 @@ router.get('/test',function(req , res){
   }
  console.log(req.query) 
  res.status(200).json(req.query);
+});
+
+router.post('/upload',upload.single('file_test'), function(req, res){
+  res.send('Uploaded! : '+req.file); // object를 리턴함
+  console.log(req.file); // 콘솔(터미널)을 통해서 req.file Object 내용 확인 가능.
+  res.status(200).json(res_util.json_val);
 });
 
 
