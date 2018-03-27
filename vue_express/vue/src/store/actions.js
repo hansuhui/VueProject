@@ -62,7 +62,7 @@ export default {
       })
   },
   [test.UPLOAD]: (store, payload) => {
-    api.Upload({pk: payload})
+    api.Upload(payload)
       .then((res) => {
         if (res.data.code === '00') {
           alert('등록 되었습니다')
