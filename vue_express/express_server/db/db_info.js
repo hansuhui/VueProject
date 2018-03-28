@@ -3,9 +3,9 @@ module.exports = (function () {
       local: { // localhost
         host: 'localhost',
         port: '3306',      
-        user: 'vue',
+        user: 'vue_user',
         password: 'vue1234',
-        database: 'ajax'
+        database: 'vue'
       }
     }
   })();

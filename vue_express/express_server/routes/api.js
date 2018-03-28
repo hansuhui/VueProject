@@ -7,6 +7,7 @@ var res_util = require('../util/res_util');
 
 router.post('/list',function(req , res){
   mysql.exec('select * from test',function (err,result) {
+    console.log(err);
     res_util.json_val.result = result;
     res.status(200).json(res_util.json_val);
   });
